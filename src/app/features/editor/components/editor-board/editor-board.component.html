@@ -1,0 +1,10 @@
+<div #wrapper class="editor-board-wrapper">
+  <div
+    #board
+    id="board"
+    (wheel)="onWheel($event)"
+    (mousedown)="onMouseDown($event)"
+    (mouseup)="onMouseUp($event)"
+    (mousemove)="onMouseMove($event)"
+  ></div>
+</div>

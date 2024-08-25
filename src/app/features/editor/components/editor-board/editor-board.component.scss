@@ -1,0 +1,22 @@
+.editor-board-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+
+  #board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: 30px 30px;
+    background-image: radial-gradient(circle, #b8b8b8bf 1px, transparent 1px);
+    cursor: grab;
+    transform-origin: 0 0;
+
+    &.dragging {
+      cursor: grabbing;
+    }
+  }
+}
