@@ -2,9 +2,10 @@
   <div
     #board
     id="board"
+    [class.dragging]="dragging"
     (wheel)="onWheel($event)"
     (mousedown)="onMouseDown($event)"
-    (mouseup)="onMouseUp($event)"
+    (mouseup)="onMouseUp()"
     (mousemove)="onMouseMove($event)"
   ></div>
 </div>

@@ -11,13 +11,18 @@ export class EditorBoardComponent {
   @ViewChild('board') board?: ElementRef<HTMLDivElement>;
   @Input() scaleOptions: BoardScaleOptions;
 
+  protected dragging: boolean;
+
   private scale: number;
   private position: { x: number, y: number };
+  private clickPosition: { x: number, y: number };
 
   constructor() {
     this.scale = 1;
     this.position = {x: 0, y: 0};
+    this.clickPosition = {x: -1, y: -1};
     this.scaleOptions = new BoardScaleOptions();
+    this.dragging = false;
   }
 
   public onWheel(event: WheelEvent) {
@@ -33,7 +38,7 @@ export class EditorBoardComponent {
 
     // Get the scroll direction
     // Cap the delta to [-1,1] for cross browser consistency
-    let delta = Math.max(-1, Math.min(1, event.deltaY));
+    let delta = Math.max(-1, Math.min(1, -event.deltaY));
 
     // Determine the point on where the slide is zoomed in
     const zoomTargetX = (zoomPointX - this.position.x) / this.scale;
@@ -51,15 +56,33 @@ export class EditorBoardComponent {
   }
 
   public onMouseDown(event: MouseEvent) {
-
+    this.dragging = true;
+    this.clickPosition.x = event.x;
+    this.clickPosition.y = event.y;
   }
 
-  public onMouseUp(event: MouseEvent) {
-
+  public onMouseUp() {
+    this.dragging = false;
+    this.clickPosition.x = -1;
+    this.clickPosition.y = -1;
   }
 
   public onMouseMove(event: MouseEvent) {
+    if (this.clickPosition.x === -1 || this.clickPosition.y === -1) {
+      return;
+    }
 
+    if (!this.wrapper) {
+      return;
+    }
+
+    const deltaX = -(event.x - this.clickPosition.x);
+    const deltaY = -(event.y - this.clickPosition.y);
+
+    this.clickPosition.x = event.x;
+    this.clickPosition.y = event.y;
+
+    this.wrapper.nativeElement.scrollBy(deltaX, deltaY);
   }
 
   private update() {
