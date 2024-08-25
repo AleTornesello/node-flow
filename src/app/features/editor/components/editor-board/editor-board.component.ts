@@ -40,7 +40,7 @@ export class EditorBoardComponent {
     const zoomTargetY = (zoomPointY - this.position.y) / this.scale;
 
     // Apply zoom
-    this.scale += delta * this.scaleOptions.scaleFactor * this.scale;
+    this.scale += delta * this.scaleOptions.scaleFactor;
     this.scale = Math.max(this.scaleOptions.scaleLowerBound, Math.min(this.scaleOptions.scaleUpperBound, this.scale));
 
     // Calculate x and y based on zoom
